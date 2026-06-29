@@ -14,7 +14,7 @@ It does not modify PaddleOCR model weights. It does not guarantee perfect OCR. U
 
 ## 中文
 
-本项目不是简单的 OCR 后处理替换工具，而是一个医学 OCR 可靠性增强流水线。
+本项目诞生之因是为了扫描课本整理成md格式，比起一个ocr调用skills更像是一个专门为了识别各种在医学课本中常见的特殊符号的处理skills
 
 它通过局部裁剪、图像增强、二次识别、医学符号规则、上下文校验和 QA 自检，提高医学教材、课件、题库截图和扫描 PDF 的 OCR 质量。
 
