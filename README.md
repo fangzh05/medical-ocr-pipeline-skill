@@ -33,7 +33,7 @@ skills/
 After this repository is on GitHub, install the skill with:
 
 ```powershell
-python C:\Users\16648\.codex\skills\.system\skill-installer\scripts\install-skill-from-github.py --url https://github.com/<owner>/medical-ocr-router-skill/tree/main/skills/medical-ocr-router
+python C:\Users\16648\.codex\skills\.system\skill-installer\scripts\install-skill-from-github.py --url https://github.com/fangzh05/medical-ocr-router-skill/tree/main/skills/medical-ocr-router
 ```
 
 Then restart Codex.
@@ -44,4 +44,3 @@ Then restart Codex.
 python skills\medical-ocr-router\scripts\test_medical_corrector.py
 python C:\Users\16648\.codex\skills\.system\skill-creator\scripts\quick_validate.py skills\medical-ocr-router
 ```
-
