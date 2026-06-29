@@ -1,39 +1,111 @@
-# 医学教材OCRskills / Medical Textbook OCR Skills
+# 医学 OCR 后处理与质量控制 Codex Skill / Medical OCR Corrector & QA Skill
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-v0.1.0-blue.svg)](RELEASE_NOTES_v0.1.0.md)
 [![Codex Skill](https://img.shields.io/badge/Codex-Skill-111827.svg)](skills/medical-ocr-router/SKILL.md)
 
-医学教材 OCR 路由与医学符号校正 Codex Skill。  
-Medical textbook OCR routing and biomedical notation correction skill for Codex.
+面向医学教材、课件、题库、扫描 PDF 和截图 OCR 文本的后处理与质量控制 Codex Skill。  
+A Codex skill for post-processing and quality-checking OCR text from medical textbooks, slides, question banks, scanned PDFs, and screenshots.
 
 ## 中文说明
 
-这是一个用于 Codex 的医学教材 OCR 技能包，适合处理医学截图、扫描版 PDF、教材页面、课件幻灯片、题库图片和混合排版文档。
+这个项目的重点不是选择 OCR 工具，而是在 OCR 之后把医学文本整理到可学习、可复核、可发布的状态。
 
-它的目标不只是“识别文字”，而是尽量保留医学学习资料中容易被普通 OCR 破坏的结构和符号。普通 OCR 可能把 `PaCO₂`、`HCO₃⁻`、`SpO₂`、`FEV₁/FVC`、`HbA₁c` 识别成 `PaCO2`、`HCO3-`、`SpO2`、`FEV1/FVC`、`HbA1c`。这个 skill 会提示 Codex 使用更合适的 OCR 路由，并在识别后执行医学符号校正和质量检查。
+它会引导 Codex 对医学 OCR 文本进行：
+
+- 医学符号纠错：如 `PaCO2` -> `PaCO₂`、`HCO3-` -> `HCO₃⁻`
+- 题库结构恢复：题号、题干、选项、答案、解析分离
+- 单位标准化：如 `mm Hg` -> `mmHg`、`mg / dL` -> `mg/dL`
+- Markdown 清理：恢复标题、列表、表格和题目结构
+- 输出前自检：检查残留扁平化医学符号、合并选项、单位格式和隐私风险
 
 ## English
 
-This is a Codex skill package for high-fidelity OCR of medical textbooks, screenshots, scanned PDFs, lecture slides, question-bank images, and mixed-layout documents.
+This project is not primarily about choosing an OCR engine. It focuses on cleaning, correcting, structuring, and quality-checking medical OCR text after OCR has already been produced.
 
-Its goal is not only to extract text, but also to preserve layout-sensitive and meaning-sensitive medical content. Plain OCR may flatten `PaCO₂`, `HCO₃⁻`, `SpO₂`, `FEV₁/FVC`, and `HbA₁c` into `PaCO2`, `HCO3-`, `SpO2`, `FEV1/FVC`, and `HbA1c`. This skill guides Codex to route OCR more carefully, then apply biomedical notation correction and quality checks.
+It guides Codex to:
+
+- correct biomedical notation, such as `PaCO2` -> `PaCO₂` and `HCO3-` -> `HCO₃⁻`
+- recover question-bank structure: number, stem, options, answer, and explanation
+- standardize units, such as `mm Hg` -> `mmHg` and `mg / dL` -> `mg/dL`
+- clean Markdown structure for notes, textbook pages, and question banks
+- run pre-output QA checks for flattened notation, merged options, unit formatting, and privacy risks
 
 ## 功能特点 / Features
 
-- 医学 OCR 路由：根据文本、公式、表格、混合版面和题库页面选择合适处理路径。
-- 医学符号校正：修复常见 OCR 扁平化结果，如 `PaCO2` -> `PaCO₂`、`HCO3-` -> `HCO₃⁻`。
-- 表格和公式保护：提示 Codex 避免把表格、公式和上下标结构压平成普通文本。
-- 题库结构保留：保留题号、题干、选项、答案和解析的分区。
-- Markdown 输出：面向医学学习、教材整理和题库复习生成结构化 Markdown。
-- 本地验证脚本：提供医学符号校正 smoke test 和 Codex skill 格式校验。
+- 常见医学符号映射表和保守纠错规则
+- 血气、电解质、甲功、肺功能、糖化血红蛋白、免疫标志物、核医学同位素等 OCR 易错项处理
+- 简单题库 OCR 单行恢复为结构化 Markdown
+- 单位空格和大小写标准化
+- `postprocess_medical_ocr.py` 可作为命令行后处理脚本
+- `test_medical_corrector.py` 覆盖 20+ 个医学 OCR 易错例子
 
-- Medical OCR routing: choose suitable processing paths for text, formulas, tables, mixed layouts, and question-bank pages.
-- Biomedical notation correction: repair common flattened OCR output such as `PaCO2` -> `PaCO₂` and `HCO3-` -> `HCO₃⁻`.
-- Table and formula preservation: guide Codex not to flatten structure-sensitive content.
-- Question-bank structure preservation: keep question number, stem, options, answer, and explanation separated.
-- Markdown output: generate structured Markdown for medical study, textbook reconstruction, and exam review.
-- Local validation scripts: include a biomedical notation smoke test and Codex skill validation.
+- Common biomedical notation mapping and conservative correction rules
+- Corrections for ABG, electrolytes, thyroid hormones, pulmonary function, HbA1c, immune markers, and nuclear medicine isotopes
+- Simple question-bank OCR recovery into structured Markdown
+- Unit spacing and casing normalization
+- `postprocess_medical_ocr.py` as a command-line post-processing script
+- `test_medical_corrector.py` covering 20+ common medical OCR error cases
+
+## 安装 / Installation
+
+使用 Codex 自带的 skill installer 安装：
+
+```powershell
+python C:\Users\16648\.codex\skills\.system\skill-installer\scripts\install-skill-from-github.py --url https://github.com/fangzh05/medical-ocr-router-skill/tree/main/skills/medical-ocr-router
+```
+
+安装后重启 Codex。  
+Restart Codex after installation.
+
+## 使用方式 / Usage
+
+在 Codex 中可以这样调用：
+
+```text
+Use $medical-ocr-router to post-process this medical OCR text, normalize biomedical notation, recover question structure, standardize units, and run QA checks.
+```
+
+中文请求示例：
+
+```text
+请用 $medical-ocr-router 处理这段医学 OCR 文本，纠正 PaCO2、HCO3-、FEV1/FVC 等医学符号，恢复题库结构，并做输出前检查。
+```
+
+命令行脚本示例：
+
+```powershell
+python skills\medical-ocr-router\scripts\postprocess_medical_ocr.py input.txt -o output.md
+```
+
+也可以通过标准输入使用：
+
+```powershell
+Get-Content input.txt | python skills\medical-ocr-router\scripts\postprocess_medical_ocr.py
+```
+
+## 验证 / Validation
+
+提交修改前运行：
+
+```powershell
+python skills\medical-ocr-router\scripts\test_medical_corrector.py
+python C:\Users\16648\.codex\skills\.system\skill-creator\scripts\quick_validate.py skills\medical-ocr-router
+```
+
+第一条命令验证医学 OCR 后处理规则。第二条命令验证 Codex skill 元数据和结构。
+
+## 示例 / Examples
+
+| OCR text | Corrected text |
+|---|---|
+| PaCO2 | PaCO₂ |
+| HCO3- | HCO₃⁻ |
+| SaO2/SpO2 | SaO₂/SpO₂ |
+| FEV1/FVC | FEV₁/FVC |
+| T3/T4 | T₃/T₄ |
+| 131I | ¹³¹I |
+| 99mTc | ⁹⁹ᵐTc |
 
 ## 仓库结构 / Repository Layout
 
@@ -54,55 +126,17 @@ medical-ocr-router-skill/
         └── scripts/
 ```
 
-## 安装 / Installation
-
-使用 Codex 自带的 skill installer 安装：
-
-```powershell
-python C:\Users\16648\.codex\skills\.system\skill-installer\scripts\install-skill-from-github.py --url https://github.com/fangzh05/medical-ocr-router-skill/tree/main/skills/medical-ocr-router
-```
-
-安装后重启 Codex。  
-Restart Codex after installation.
-
-## 使用方式 / Usage
-
-在 Codex 中处理医学 OCR 任务时，可以直接提出类似请求：
-
-```text
-Use $medical-ocr-router to OCR this medical textbook screenshot into Markdown and preserve biomedical notation.
-```
-
-也可以用中文描述：
-
-```text
-请用 $medical-ocr-router 识别这张医学教材截图，保留表格、公式和 PaCO₂、HCO₃⁻ 这类医学符号。
-```
-
-该 skill 会引导 Codex 在普通 OCR、公式识别、表格识别、版面分析和医学符号校正之间进行路由。
-
-## 验证 / Validation
-
-提交修改前建议运行：
-
-```powershell
-python skills\medical-ocr-router\scripts\test_medical_corrector.py
-python C:\Users\16648\.codex\skills\.system\skill-creator\scripts\quick_validate.py skills\medical-ocr-router
-```
-
-第一条命令验证医学符号校正规则。第二条命令验证 Codex skill 元数据和结构。
-
 ## 局限性 / Limitations
 
-- 本仓库提供 Codex skill 指南和后处理脚本，不内置完整 OCR 引擎。
-- 公式识别、表格识别和版面分析能力取决于本地环境中可用的 OCR 工具。
-- 医学符号校正是保守规则，不能替代人工校对。
-- 对真实病历、检查报告或患者资料进行 OCR 前，必须先脱敏。
+- 本项目不内置 OCR 引擎，默认处理已经 OCR 出来的文本。
+- 后处理规则不能替代人工医学审校。
+- 对 `T3/T4`、`CO2/O2` 这类可能有多重含义的文本，会尽量根据上下文保守处理。
+- 复杂表格、公式图片和严重错乱的 OCR 文本仍需要人工复核。
 
-- This repository provides a Codex skill guide and post-processing scripts, not a full OCR engine.
-- Formula, table, and layout recognition depend on the OCR tools available in the local environment.
-- Biomedical notation correction is conservative and does not replace human review.
-- Real clinical records, reports, or patient materials must be de-identified before OCR.
+- This project does not include an OCR engine; it assumes OCR text already exists.
+- Post-processing rules do not replace medical review.
+- Ambiguous tokens such as `T3/T4` and `CO2/O2` are handled conservatively using context where possible.
+- Complex tables, formula images, and severely corrupted OCR text still need human review.
 
 ## 隐私提醒 / Privacy Notice
 
@@ -112,14 +146,15 @@ Do not upload patient privacy data, real medical records, ID numbers, phone numb
 
 ## 后续计划 / Roadmap
 
-- 增加更多医学符号校正规则。
-- 补充更多中文医学教材和题库 OCR 示例。
-- 增加可选 OCR pipeline 示例。
-- 改进表格和公式区域的复核提示。
-- Add more biomedical notation correction rules.
-- Add more Chinese medical textbook and question-bank OCR examples.
-- Add optional OCR pipeline examples.
-- Improve review hints for table and formula regions.
+- 扩展医学符号和单位标准化规则。
+- 增加更多中文医学题库结构恢复样例。
+- 支持更复杂的多题连续文本整理。
+- 增加可选的 JSON QA 报告输出。
+
+- Expand biomedical notation and unit normalization rules.
+- Add more Chinese medical question-bank recovery examples.
+- Support more complex multi-question OCR text.
+- Add optional JSON QA report output.
 
 ## 开源协议 / License
 

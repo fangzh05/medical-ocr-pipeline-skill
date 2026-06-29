@@ -1,8 +1,7 @@
 interface:
-  display_name: "Medical OCR Router"
-  short_description: "Medical OCR routing and notation repair"
-  default_prompt: "Use $medical-ocr-router to OCR this medical material into clean Markdown while preserving biomedical notation, tables, and formulas."
+  display_name: "Medical OCR Corrector & QA"
+  short_description: "Medical OCR cleanup and quality checks"
+  default_prompt: "Use $medical-ocr-router to post-process this medical OCR text, normalize biomedical notation, restore question structure, standardize units, and run QA checks."
 
 policy:
   allow_implicit_invocation: true
-
