@@ -1,13 +1,10 @@
 ---
 name: medical-ocr-pipeline
 description: >
-  Medical OCR Pipeline Skill for Codex. Use for medical textbooks, lecture
-  slides, scanned PDFs, screenshots, and question banks when Codex needs an OCR
-  refinement pipeline with image preprocessing, initial OCR block capture with
-  bbox/text/confidence, medical risk detection, low-confidence crop
-  re-recognition, context-aware biomedical symbol correction,
-  question/table/paragraph reconstruction, Markdown/JSON output, and QA
-  warnings.
+  Medical OCR Pipeline Skill for Codex. Use for medical textbooks, lecture slides,
+  scanned PDFs, screenshots, and question banks when Codex needs an OCR refinement
+  pipeline with image preprocessing, OCR block capture, risk detection, crop re-recognition,
+  context-aware biomedical symbol correction, structured output, and QA warnings.
 ---
 
 # Medical OCR Pipeline Skill
