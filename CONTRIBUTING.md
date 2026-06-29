@@ -9,15 +9,15 @@ Issues and pull requests are welcome.
 
 修改以下内容后，请运行本地验证：
 
-- `skills/medical-ocr-router/SKILL.md`
-- `skills/medical-ocr-router/references/`
-- `skills/medical-ocr-router/scripts/`
+- `skills/medical-ocr-pipeline/SKILL.md`
+- `skills/medical-ocr-pipeline/references/`
+- `skills/medical-ocr-pipeline/scripts/`
 
 提交 PR 前运行：
 
 ```powershell
-python skills\medical-ocr-router\scripts\test_medical_corrector.py
-python C:\Users\16648\.codex\skills\.system\skill-creator\scripts\quick_validate.py skills\medical-ocr-router
+python skills\medical-ocr-pipeline\scripts\test_medical_ocr_pipeline.py
+python C:\Users\16648\.codex\skills\.system\skill-creator\scripts\quick_validate.py skills\medical-ocr-pipeline
 ```
 
 请不要在 issue、PR 或测试文件中加入患者隐私、真实病历、身份证号、手机号、医院号或检查报告原图。
@@ -28,16 +28,15 @@ Please use GitHub issues for bugs, suggestions, and new medical OCR scenarios. P
 
 After modifying any of the following, run local validation:
 
-- `skills/medical-ocr-router/SKILL.md`
-- `skills/medical-ocr-router/references/`
-- `skills/medical-ocr-router/scripts/`
+- `skills/medical-ocr-pipeline/SKILL.md`
+- `skills/medical-ocr-pipeline/references/`
+- `skills/medical-ocr-pipeline/scripts/`
 
 Before opening a PR, run:
 
 ```powershell
-python skills\medical-ocr-router\scripts\test_medical_corrector.py
-python C:\Users\16648\.codex\skills\.system\skill-creator\scripts\quick_validate.py skills\medical-ocr-router
+python skills\medical-ocr-pipeline\scripts\test_medical_ocr_pipeline.py
+python C:\Users\16648\.codex\skills\.system\skill-creator\scripts\quick_validate.py skills\medical-ocr-pipeline
 ```
 
 Do not include patient privacy data, real medical records, ID numbers, phone numbers, hospital IDs, or original examination report images in issues, PRs, or test files.
-

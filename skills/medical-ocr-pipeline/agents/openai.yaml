@@ -1,0 +1,8 @@
+interface:
+  display_name: "Medical OCR Pipeline"
+  short_description: "Medical OCR refinement and QA pipeline"
+  default_prompt: "Use $medical-ocr-pipeline to refine this medical OCR task with risk detection, crop re-recognition, context-aware correction, structured output, and QA warnings."
+
+policy:
+  allow_implicit_invocation: true
+

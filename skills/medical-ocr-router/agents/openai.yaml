@@ -1,7 +1,0 @@
-interface:
-  display_name: "Medical OCR Corrector & QA"
-  short_description: "Medical OCR cleanup and quality checks"
-  default_prompt: "Use $medical-ocr-router to post-process this medical OCR text, normalize biomedical notation, restore question structure, standardize units, and run QA checks."
-
-policy:
-  allow_implicit_invocation: true
